@@ -47,12 +47,17 @@ def save_data(data):
 
 # Here is where you attempt to open the text file and read the data into a "data" variable
 
+# Load the saved Pokémon data from the file.
+file = None
 try:
     file = open('pokemon.txt', 'r')
     data = json.load(file)
-    file.close()
 except:
     data = []
+finally:    
+    if file != None:
+        file.close()
+
 
 # If the file does not exist or does not contain JSON data, set "data" to an empty list instead.
 # This is the only time that the program should need to read anything from the file.
@@ -73,14 +78,16 @@ while True:
         # Add a new Pokémon.
         # See Point 3 of the "Requirements of admin.py" section of the assignment brief.
         pokemon_name = input_something('Enter a Pokémon Name : ')
+        
+        # Format the Pokemon name for the API request.
         pokemon_name = pokemon_name.lower()
-        pokemon_name = pokemon_name.replace('.', ' ')
-        pokemon_name = pokemon_name.replace("'", ' ')
-        pokemon_name = pokemon_name.replace(' ', '-')
+        pokemon_name = pokemon_name.replace('.', '')
+        pokemon_name = pokemon_name.replace("'", '')
         pokemon_name = pokemon_name.replace(':', '')
+        pokemon_name = pokemon_name.replace(' ', '-')
 
-        url = f'https://pokeapi.co/api/v2/pokemon-species/'+ pokemon_name
-        request = urllib.request.Request(url,headers={'User-Agent':10727799 })
+        url = 'https://pokeapi.co/api/v2/pokemon-species/' + pokemon_name
+        request = urllib.request.Request(url,headers={'User-Agent':'10727799' })
 
         try: 
             response = urllib.request.urlopen(request)
@@ -88,7 +95,7 @@ while True:
             response.close()
 
         except urllib.error.HTTPError:
-            print('Pokémon not found.')       
+            print('Pokemon not found.')       
 
         else:
             
@@ -113,27 +120,27 @@ while True:
 
 
                 if species_data['evolves_from_species'] != None:
-                    previous_name = species_data['evolves_from_species']['names']
+                    previous_name = species_data['evolves_from_species']['name']
 
-                    privious_url = 'https://pokeapi.co/api/v2/pokemon-species/' + previous_name
-                    privious_request = urllib.request.Request(privious_url,headers={'User-Agent':10727799 })
+                    previous_url = 'https://pokeapi.co/api/v2/pokemon-species/' + previous_name
+                    previous_request = urllib.request.Request(previous_url,headers={'User-Agent':'10727799' })
                  
-                    privious_response = urllib.request.urlopen(privious_request)
-                    privious_data = json.load(privious_response)
-                    privious_response.close()
+                    previous_response = urllib.request.urlopen(previous_request)
+                    previous_data = json.load(previous_response)
+                    previous_response.close()
 
-                    evolves_from = extract_english(privious_data['names'], 'name')
+                    evolves_from = extract_english(previous_data['names'], 'name')
 
                 print(pokemon_name , 'found!')
                 print('Pokedex Number:', pokemon_number)
                 print('Category:', pokemon_category)
 
-                 # Get the rest of the Pokémon details.
-                poemon_url = 'https://pokeapi.co/api/v2/pokemon/' + str(pokemon_number)
-                poemon_request = urllib.request.Request(poemon_url,
-                                                        headers={'User-Agent':10727799 })
+                 # Get the rest of the Pokemon details.
+                pokemon_url = 'https://pokeapi.co/api/v2/pokemon/' + str(pokemon_number)
+                pokemon_request = urllib.request.Request(pokemon_url,
+                                                        headers={'User-Agent':'10727799' })
 
-                pokemon_response = urllib.request.urlopen(poemon_request)
+                pokemon_response = urllib.request.urlopen(pokemon_request)
                 pokemon_data = json.load(pokemon_response)
                 pokemon_response.close()
 
@@ -141,7 +148,7 @@ while True:
                 pokemon_height = pokemon_data['height'] / 10
                 pokemon_weight = pokemon_data['weight'] / 10
 
-                #Get the types of the Pokémon.
+                #Get the types of the Pokemon.
                 pokemon_types = []
 
                 for type_data in pokemon_data['types']:
@@ -156,7 +163,7 @@ while True:
 
                 # Download the image and save it to the images folder using pokemon number.
                 image_request = urllib.request.Request(image_url, 
-                                        headers={'User-Agent': 10727799}) 
+                                        headers={'User-Agent': '10727799'}) 
                 image_response = urllib.request.urlopen(image_request)
                 image_file = open('images/' + str(pokemon_number) + '.png', 'wb')
                 image_file.write(image_response.read())
@@ -188,6 +195,8 @@ while True:
                 save_data(data)
 
                 print(pokemon_name, 'added to your Pokedex!')
+
+
     elif choice == 'l':
         # List current Pokémon.
         # See Point 4 of the "Requirements of admin.py" section of the assignment brief.
@@ -195,10 +204,10 @@ while True:
         if len(data) == 0:
             print('Your pokedex is empty.')
         else:
-            print('Your pokedex :')
+            print('Your pokedex Contains :')
             for pokemon in data:
                 pokemon_number = str(pokemon['number']).zfill(4)    
-                print('#' + pokemon_number, pokemon['name'])
+                print('#' + pokemon_number +":", pokemon['name'])
 
 
 
