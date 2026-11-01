@@ -91,8 +91,13 @@ while True:
             print('Pokémon not found.')       
 
         else:
-            pokemon_number = species_data['pokedex_numbers'][0]['entry_number']
-            pokemon_exists = False
+            
+            pokemon_number = species_data['pokedex_numbers'][0]['entry_number']  # Get the national Pokédex number.
+
+
+            pokemon_exists = False         # Check whether the Pokémon already exists.
+
+
             for pokemon in data:
                 if pokemon['number'] == pokemon_number:
                     pokemon_exists = True
@@ -101,23 +106,28 @@ while True:
                 print('This Pokémon is already in your Pokédex.') 
 
             else:
-                pomemon_name = extract_english(species_data['names'], 'name')
+                pokemon_name = extract_english(species_data['names'], 'name')
                 pokemon_category = extract_english(species_data['genera'], 'genus')
 
-                evolves_from = None
+                evolves_from = None    # Get the previous evolution, if applicable.
+
 
                 if species_data['evolves_from_species'] != None:
                     previous_name = species_data['evolves_from_species']['names']
 
-                    previous_url = species_data['evolves_from_species']['url']
-                    previous_request = urllib.request.Request(previous_url,headers={'User-Agent':10727799 })
-                    previous_response = urllib.request.urlopen(previous_request)    
-                    previous_name = json.load(previous_response)
-                    previous_response.close()
+                    privious_url = 'https://pokeapi.co/api/v2/pokemon-species/' + previous_name
+                    privious_request = urllib.request.Request(privious_url,headers={'User-Agent':10727799 })
+                 
+                    privious_response = urllib.request.urlopen(privious_request)
+                    privious_data = json.load(privious_response)
+                    privious_response.close()
 
-                print(f'Pokémon {pomemon_name} added to your Pokédex.')
-                print('category:', pokemon_category)
+                    evolves_from = extract_english(privious_data['names'], 'name')
 
+                print(pokemon_name , 'found!')
+                print('Pokedex Number:', pokemon_number)
+                print('Category:', pokemon_category)
+                print('Evolves From:', evolves_from)
 
     elif choice == 'l':
         # List current Pokémon.
