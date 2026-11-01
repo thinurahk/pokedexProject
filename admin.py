@@ -39,7 +39,15 @@ def save_data(data):
     pass
 
 
-# Here is where you attempt to open the text file and read the data into a "data" variable.
+# Here is where you attempt to open the text file and read the data into a "data" variable
+
+try:
+    file = open('pokemon.txt', 'r')
+    data = json.load(file)
+    file.close()
+except:
+    data = []
+
 # If the file does not exist or does not contain JSON data, set "data" to an empty list instead.
 # This is the only time that the program should need to read anything from the file.
 # See Point 1 of the "Requirements of admin.py" section of the assignment brief.
