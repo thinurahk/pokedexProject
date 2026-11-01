@@ -191,7 +191,15 @@ while True:
     elif choice == 'l':
         # List current Pokémon.
         # See Point 4 of the "Requirements of admin.py" section of the assignment brief.
-        pass
+        
+        if len(data) == 0:
+            print('Your pokedex is empty.')
+        else:
+            print('Your pokedex :')
+            for pokemon in data:
+                pokemon_number = str(pokemon['number']).zfill(4)    
+                print('#' + pokemon_number, pokemon['name'])
+
 
 
     elif choice == 's':
