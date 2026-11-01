@@ -18,13 +18,18 @@ import os
 # This function repeatedly prompts for input until something other than whitespace is entered.
 # See Point 1 of the "Functions in admin.py" section of the assignment brief.
 def input_something(prompt):
-    pass
-
+    while True:
+        user_input = input(prompt).strip()
+        if user_input != '':
+            return user_input
 
 # This function finds some desired English text from a list of dictionaries.
 # See Point 2 of the "Functions in admin.py" section of the assignment brief.
 def extract_english(entries, key):
-    pass
+    for entry in entries:
+        if entry['language']['name'] == 'en':
+            return entry[key]
+    
 
 
 # This function repeatedly prompts for input until a valid Pokémon number is entered.
@@ -36,8 +41,9 @@ def choose_pokemon(prompt, data):
 # This function opens the text file in write mode and writes data to it in JSON format.
 # See Point 4 of the "Functions in admin.py" section of the assignment brief.
 def save_data(data):
-    pass
-
+    file = open('pokemon.txt', 'w')
+    json.dump(data, file,indent=4)
+    file.close()
 
 # Here is where you attempt to open the text file and read the data into a "data" variable
 
