@@ -72,9 +72,53 @@ while True:
     if choice == 'a':
         # Add a new Pokémon.
         # See Point 3 of the "Requirements of admin.py" section of the assignment brief.
-        pass
+        pokemon_name = input_something('Enter a Pokémon Name : ')
+        pokemon_name = pokemon_name.lower()
+        pokemon_name = pokemon_name.replace('.', ' ')
+        pokemon_name = pokemon_name.replace("'", ' ')
+        pokemon_name = pokemon_name.replace(' ', '-')
+        pokemon_name = pokemon_name.replace(':', '')
 
-        
+        url = f'https://pokeapi.co/api/v2/pokemon-species/'+ pokemon_name
+        request = urllib.request.Request(url,headers={'User-Agent':10727799 })
+
+        try: 
+            response = urllib.request.urlopen(request)
+            species_data = json.load(response)
+            response.close()
+
+        except urllib.error.HTTPError:
+            print('Pokémon not found.')       
+
+        else:
+            pokemon_number = species_data['pokedex_numbers'][0]['entry_number']
+            pokemon_exists = False
+            for pokemon in data:
+                if pokemon['number'] == pokemon_number:
+                    pokemon_exists = True
+
+            if pokemon_exists:
+                print('This Pokémon is already in your Pokédex.') 
+
+            else:
+                pomemon_name = extract_english(species_data['names'], 'name')
+                pokemon_category = extract_english(species_data['genera'], 'genus')
+
+                evolves_from = None
+
+                if species_data['evolves_from_species'] != None:
+                    previous_name = species_data['evolves_from_species']['names']
+
+                    previous_url = species_data['evolves_from_species']['url']
+                    previous_request = urllib.request.Request(previous_url,headers={'User-Agent':10727799 })
+                    previous_response = urllib.request.urlopen(previous_request)    
+                    previous_name = json.load(previous_response)
+                    previous_response.close()
+
+                print(f'Pokémon {pomemon_name} added to your Pokédex.')
+                print('category:', pokemon_category)
+
+
     elif choice == 'l':
         # List current Pokémon.
         # See Point 4 of the "Requirements of admin.py" section of the assignment brief.
