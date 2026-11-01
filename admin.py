@@ -127,8 +127,67 @@ while True:
                 print(pokemon_name , 'found!')
                 print('Pokedex Number:', pokemon_number)
                 print('Category:', pokemon_category)
-                print('Evolves From:', evolves_from)
 
+                 # Get the rest of the Pokémon details.
+                poemon_url = 'https://pokeapi.co/api/v2/pokemon/' + str(pokemon_number)
+                poemon_request = urllib.request.Request(poemon_url,
+                                                        headers={'User-Agent':10727799 })
+
+                pokemon_response = urllib.request.urlopen(poemon_request)
+                pokemon_data = json.load(pokemon_response)
+                pokemon_response.close()
+
+                # Convert the height and weight into metres and kilograms.
+                pokemon_height = pokemon_data['height'] / 10
+                pokemon_weight = pokemon_data['weight'] / 10
+
+                #Get the types of the Pokémon.
+                pokemon_types = []
+
+                for type_data in pokemon_data['types']:
+                    pokemon_types.append(type_data['type']['name'])
+
+                # Get pokeemon image. 
+                image_url = pokemon_data['sprites']['front_default']
+
+                # Create the images folder if it does not exist.
+                if not os.path.exists('images'):
+                    os.makedirs('images')
+
+                # Download the image and save it to the images folder using pokemon number.
+                image_request = urllib.request.Request(image_url, 
+                                        headers={'User-Agent': 10727799}) 
+                image_response = urllib.request.urlopen(image_request)
+                image_file = open('images/' + str(pokemon_number) + '.png', 'wb')
+                image_file.write(image_response.read())
+                image_file.close()
+                image_response.close()
+
+                #create a dicttionary with the pokemon details
+                new_pokemon = {
+                    "name": pokemon_name,
+                    "number": pokemon_number,
+                    "category": pokemon_category,
+                    "height": pokemon_height,
+                    "weight": pokemon_weight,
+                    "types": pokemon_types,
+                }
+
+                
+                # Add the previous evolution if the Pokémon has one.
+                if evolves_from != None:
+                    new_pokemon["evolves_from"] = evolves_from
+
+                # Add the new Pokémon to the list.    
+                data.append(new_pokemon)
+
+                # Sort the Pokémon list by Pokédex number.
+                data.sort(key=lambda pokemon: pokemon['number'])
+
+                # Save the updated Pokémon list.
+                save_data(data)
+
+                print(pokemon_name, 'added to your Pokedex!')
     elif choice == 'l':
         # List current Pokémon.
         # See Point 4 of the "Requirements of admin.py" section of the assignment brief.
