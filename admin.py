@@ -328,10 +328,12 @@ while True:
     elif choice == 'q':
         # Quit the program.
         # See Point 8 of the "Requirements of admin.py" section of the assignment brief.
-        pass
+         # Display a goodbye message and exit the menu loop.
+        print('Goodbye! Made by Thinura Hewa Koonputugodage (10727799)!.')
+        break
 
 
     else:
         # Print "invalid choice" message.
         # See Point 9 of the "Requirements of admin.py" section of the assignment brief.
-        pass
+        print('Invalid choice. Please try again.')
