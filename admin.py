@@ -35,7 +35,17 @@ def extract_english(entries, key):
 # This function repeatedly prompts for input until a valid Pokémon number is entered.
 # See Point 3 of the "Functions in admin.py" section of the assignment brief.
 def choose_pokemon(prompt, data):
-    pass
+    while True:
+        try:
+            pokemon_number = int(input(prompt))
+            for pokemon in data:
+                if pokemon['number'] == pokemon_number:
+                    return pokemon
+
+            print('Pokemon number not found. try again.')
+
+        except ValueError:
+            print('Please enter a valid number.')
 
 
 # This function opens the text file in write mode and writes data to it in JSON format.
@@ -206,8 +216,10 @@ while True:
         else:
             print('Your pokedex Contains :')
             for pokemon in data:
-                pokemon_number = str(pokemon['number']).zfill(4)    
-                print('#' + pokemon_number +":", pokemon['name'])
+                pokemon_number = str(pokemon['number'])
+                while len(pokemon_number) < 4:
+                    pokemon_number = '0' + pokemon_number
+                print('#' + pokemon_number +" : ", pokemon['name'])
 
 
 
@@ -232,9 +244,11 @@ while True:
                 # Check if the search term is in the name or category.
                 if search_term in pokemon['name'].lower() or search_term in pokemon['category'].lower():
 
-                    pokemon_number = str(pokemon['number']).zfill(4)
+                    pokemon_number = str(pokemon['number'])
+                    while len(pokemon_number) < 4:
+                        pokemon_number = '0' + pokemon_number
 
-                    print('#' + pokemon_number + ': ' + pokemon['name'])
+                    print('#' + pokemon_number + ' : ' + pokemon['name'])
 
                     found = True
 
@@ -246,13 +260,51 @@ while True:
     elif choice == 'v':
         # View details of a Pokémon.
         # See Point 6 of the "Requirements of admin.py" section of the assignment brief.
-        pass
+
+        if len(data) == 0:
+            print('Your Pokedex is empty.')
+
+        else:
+            # Ask the user to choose a Pokemon.
+            pokemon = choose_pokemon('Pokemon number to view: ', data)
+
+            # Format the Pokemon number with four digits.
+            pokemon_number = str(pokemon['number'])
+
+            while len(pokemon_number) < 4:
+                pokemon_number = '0' + pokemon_number
+
+            # Display the Pokemon details.
+            print(pokemon['name'] + ' [#' + pokemon_number + ']')
+            print('  ' + pokemon['category'])
+
+            # Display the Pokemon types.
+            pokemon_types = ''
+
+            for pokemon_type in pokemon['types']:
+                if pokemon_types == '':
+                    pokemon_types = pokemon_type.capitalize()
+                else:
+                    pokemon_types = pokemon_types + ', ' + pokemon_type.capitalize()
+
+            print('  Type: ' + pokemon_types)
+
+                # Use capitalize() to make the first letter of each Pokemon type uppercase.
+                # Reference: Python Documentation - str.capitalize()
+                # https://docs.python.org/3/library/stdtypes.html#str.capitalize
+
+            # Display the Pokemon height and weight.
+            print('  Size: ' + str(pokemon['height']) + 'm, ' + str(pokemon['weight']) + 'kg')
+
+            # Display the previous evolution if it exists.
+            if 'evolves_from' in pokemon:
+                print('  Evolves from ' + pokemon['evolves_from'])        
 
 
     elif choice == 'd':
-        # Delete a Pokémon.
+        # Delete a Pokemon.
         # See Point 7 of the "Requirements of admin.py" section of the assignment brief.
-        pass
+        
 
 
     elif choice == 'q':
