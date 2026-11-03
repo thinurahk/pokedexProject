@@ -1,0 +1,13 @@
+[
+    {
+        "name": "Pikachu",
+        "number": 25,
+        "category": "Mouse Pok\u00e9mon",
+        "height": 0.4,
+        "weight": 6.0,
+        "types": [
+            "electric"
+        ],
+        "evolves_from": "Pichu"
+    }
+]

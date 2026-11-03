@@ -214,7 +214,33 @@ while True:
     elif choice == 's':
         # Search current Pokémon.
         # See Point 5 of the "Requirements of admin.py" section of the assignment brief.
-        pass
+                                
+        if len(data) == 0:           # Check if the Pokedex is empty
+            print('Your Pokedex is empty.')
+
+        else:
+            # Ask the user for a search term.
+            search_term = input_something('Please Enter search term: ').lower()
+
+            found = False
+
+            print('Search results:')
+
+            # Go through each Pokemon in the list.
+            for pokemon in data:
+
+                # Check if the search term is in the name or category.
+                if search_term in pokemon['name'].lower() or search_term in pokemon['category'].lower():
+
+                    pokemon_number = str(pokemon['number']).zfill(4)
+
+                    print('#' + pokemon_number + ': ' + pokemon['name'])
+
+                    found = True
+
+            # Display a message if no Pokemon matched.
+            if found == False:
+                print('No Pokemon found.')        
 
 
     elif choice == 'v':
