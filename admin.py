@@ -304,7 +304,25 @@ while True:
     elif choice == 'd':
         # Delete a Pokemon.
         # See Point 7 of the "Requirements of admin.py" section of the assignment brief.
-        
+                                      
+                                      
+        if len(data) == 0:         # Check if the Pokedex is empty.
+            print('Your Pokedex is empty.')
+
+        else:
+            # Ask the user to choose a Pokémon to delete.
+            pokemon = choose_pokemon('Pokemon number to delete: ', data)
+
+            # Delete the Pokemon from the list.
+            data.remove(pokemon)
+
+            # Delete the Pokemon image from the images folder.
+            os.remove('images/' + str(pokemon['number']) + '.png')
+
+            # Save the updated Pokemon list.
+            save_data(data)
+
+            print(pokemon['name'] + ' deleted from your Pokedex.')
 
 
     elif choice == 'q':
