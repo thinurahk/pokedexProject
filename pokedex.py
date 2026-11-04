@@ -173,14 +173,18 @@ class ProgramGUI:
     def previous(self):
         # This method decreases the index attribute to navigate to the prior Pokémon.
         # See Point 2 of the "Methods in the GUI class of pokedex.py" section of the assignment brief.
-        pass
+        if self.index > 0:          # Go to the previous Pokemon if one exists.
+            self.index = self.index - 1
+            self.show_pokemon()
 
 
     def next(self):
         # This method decreases the index attribute to navigate to the next Pokémon.
         # See Point 3 of the "Methods in the GUI class of pokedex.py" section of the assignment brief.
-        pass
 
+        if self.index < len(self.data) - 1:         # Go to the next Pokemon if one exists.
+            self.index = self.index + 1
+            self.show_pokemon()  
 
 # Create an object of the ProgramGUI class to begin the program.
 gui = ProgramGUI()
