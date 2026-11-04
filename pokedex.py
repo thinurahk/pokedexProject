@@ -38,8 +38,16 @@ class ProgramGUI:
 
         # Check if the Pokemon list is empty.
         if len(self.data) == 0:
-            tkinter.messagebox.showerror('Empty Pokédex', 'No Pokemon data found.')
+            tkinter.messagebox.showerror('Empty Pokedex', 'No Pokemon data found.')
             return
+
+
+        self.main = tkinter.Tk()    #create the main window 
+        self.main.title("Thinura's Pokedex")
+
+        self.index = 0  #keep track of the current pokemon
+
+        
 
     def show_pokemon(self):
         # This method displays the image and details of the current Pokémon in the GUI.
