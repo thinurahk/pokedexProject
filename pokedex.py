@@ -21,7 +21,25 @@ class ProgramGUI:
         # This is the constructor of the class.
         # It is responsible for loading the data from the text file and creating the user interface.
         # See the "Constructor of the GUI Class of pokedex.py" section of the assignment brief.
-        pass
+        # Load the saved Pokemon data from the file.
+        file = None
+
+        try:
+            file = open('pokemon.txt', 'r')
+            self.data = json.load(file)
+
+        except:
+            tkinter.messagebox.showerror('File Error', 'Unable to load Pokemon data.')
+            return
+
+        finally:
+            if file != None:
+                file.close()
+
+        # Check if the Pokemon list is empty.
+        if len(self.data) == 0:
+            tkinter.messagebox.showerror('Empty Pokédex', 'No Pokemon data found.')
+            return
 
     def show_pokemon(self):
         # This method displays the image and details of the current Pokémon in the GUI.
