@@ -119,7 +119,51 @@ class ProgramGUI:
     def show_pokemon(self):
         # This method displays the image and details of the current Pokémon in the GUI.
         # See Point 1 of the "Methods in the GUI class of pokedex.py" section of the assignment brief.
-        
+            pokemon = self.data[self.index]
+
+        pokemon_number = str(pokemon['number'])  # Display the Pokemon name and number.
+
+        while len(pokemon_number) < 4:
+            pokemon_number = '0' + pokemon_number
+
+        self.name_label.config(
+            text=pokemon['name'] + ' [#' + pokemon_number + ']'
+        )
+
+     
+        self.photo = tkinter.PhotoImage(                        # Display the Pokemon image.
+            file='images/' + str(pokemon['number']) + '.png'
+        )  
+
+        self.image_label.config(image=self.photo, text='')
+
+      
+        self.category_label.config(text=pokemon['category'])   # Display the Pokemon category.
+
+       
+        pokemon_types = ''    # Display the Pokemon types.
+
+        for pokemon_type in pokemon['types']:
+            if pokemon_types == '':
+                pokemon_types = pokemon_type.capitalize()
+            else:
+                pokemon_types = pokemon_types + ', ' + pokemon_type.capitalize()
+
+        self.types_label.config(text='Type: ' + pokemon_types)
+
+        # Display the Pokemon height and weight.
+        self.size_label.config(
+            text='Size: ' + str(pokemon['height']) + 'm, '
+            + str(pokemon['weight']) + 'kg'
+        )
+
+
+        if 'evolves_from' in pokemon:                  # Display the previous evolution if it exists.
+            self.evolves_label.config(
+                text='Evolves from ' + pokemon['evolves_from']
+            )
+        else:
+            self.evolves_label.config(text='')    
 
 
     def previous(self):
