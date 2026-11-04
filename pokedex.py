@@ -114,12 +114,16 @@ class ProgramGUI:
         #Display the frames in the main window.
         self.top_frame.pack(pady=5)
         self.bottom_frame.pack(padx=10, pady=10)
+
+     
+        self.show_pokemon()   #Display the first Pokemon.
+        tkinter.mainloop()     #Start the GUI main loop.
         
 
     def show_pokemon(self):
         # This method displays the image and details of the current Pokémon in the GUI.
         # See Point 1 of the "Methods in the GUI class of pokedex.py" section of the assignment brief.
-            pokemon = self.data[self.index]
+        pokemon = self.data[self.index]
 
         pokemon_number = str(pokemon['number'])  # Display the Pokemon name and number.
 
