@@ -1,13 +1,37 @@
 [
     {
-        "name": "Pikachu",
-        "number": 25,
-        "category": "Mouse Pok\u00e9mon",
-        "height": 0.4,
-        "weight": 6.0,
+        "name": "Bulbasaur",
+        "number": 1,
+        "category": "Seed Pok\u00e9mon",
+        "height": 0.7,
+        "weight": 6.9,
         "types": [
-            "electric"
+            "grass",
+            "poison"
+        ]
+    },
+    {
+        "name": "Ivysaur",
+        "number": 2,
+        "category": "Seed Pok\u00e9mon",
+        "height": 1.0,
+        "weight": 13.0,
+        "types": [
+            "grass",
+            "poison"
         ],
-        "evolves_from": "Pichu"
+        "evolves_from": "Bulbasaur"
+    },
+    {
+        "name": "Venusaur",
+        "number": 3,
+        "category": "Seed Pok\u00e9mon",
+        "height": 2.0,
+        "weight": 100.0,
+        "types": [
+            "grass",
+            "poison"
+        ],
+        "evolves_from": "Ivysaur"
     }
 ]
