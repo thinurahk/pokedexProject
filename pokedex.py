@@ -148,6 +148,10 @@ class ProgramGUI:
        
         pokemon_types = ''    # Display the Pokemon types.
 
+        # Use capitalize() to make the first letter of each Pokemon type uppercase.
+        # Reference: Python Documentation - str.capitalize()
+        # https://docs.python.org/3/library/stdtypes.html#str.capitalize
+
         for pokemon_type in pokemon['types']:
             if pokemon_types == '':
                 pokemon_types = pokemon_type.capitalize()
