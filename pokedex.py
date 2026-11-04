@@ -47,12 +47,79 @@ class ProgramGUI:
 
         self.index = 0  #keep track of the current pokemon
 
+        self.top_frame = tkinter.Frame(self.main)
+        self.bottom_frame = tkinter.Frame(self.main)
+
+        #Create the Previous button.
+        self.previous_button = tkinter.Button(
+            self.top_frame,
+            text='<',
+            command=self.previous
+        )
+        self.previous_button.pack(side='left')
+
+        #Create the Pokemon name label.
+        self.name_label = tkinter.Label(
+            self.top_frame,
+            text='Pokemon Name [#0000]',
+            font=('Arial', 14, 'bold')
+        )
+        self.name_label.pack(side='left', padx=15)
+
+        #Create the Next button.
+        self.next_button = tkinter.Button(
+            self.top_frame,
+            text='>',
+            command=self.next
+        )
+        self.next_button.pack(side='left')
+
+        #Create a label for the Pokemon image.
+        self.photo = None
+        self.image_label = tkinter.Label(
+            self.bottom_frame,
+            text='Pokemon image'
+        )
+        self.image_label.pack(side='left', padx=10)
+
+        #Create a frame for the Pokemon details.
+        self.details_frame = tkinter.Frame(self.bottom_frame)
+        self.details_frame.pack(side='left', padx=10)
+
+        #Create labels for the Pokemon details.
+        self.category_label = tkinter.Label(
+            self.details_frame,
+            text='Category'
+        )
+        self.category_label.pack(anchor='w')
+
+        self.types_label = tkinter.Label(
+            self.details_frame,
+            text='Type: '
+        )
+        self.types_label.pack(anchor='w')
+
+        self.size_label = tkinter.Label(
+            self.details_frame,
+            text='Size: '
+        )
+        self.size_label.pack(anchor='w')
+
+        self.evolves_label = tkinter.Label(
+            self.details_frame,
+            text=''
+        )
+        self.evolves_label.pack(anchor='w')
+
+        #Display the frames in the main window.
+        self.top_frame.pack(pady=5)
+        self.bottom_frame.pack(padx=10, pady=10)
         
 
     def show_pokemon(self):
         # This method displays the image and details of the current Pokémon in the GUI.
         # See Point 1 of the "Methods in the GUI class of pokedex.py" section of the assignment brief.
-        pass
+        
 
 
     def previous(self):
